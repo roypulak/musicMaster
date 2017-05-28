@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import { FormGroup, FormControl, InputGroup, Glyphicon } from 'react-bootstrap'
+import Profile from './Profile';
 
 class App extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			query: ''
+			query: '',
+			artist: null
 		}
 	}
 
@@ -20,7 +22,11 @@ class App extends Component {
 		method: 'GET'
 		})
 		.then(response => response.json())
-		.then(json => console.log('json', json));
+		.then(json => {
+			const artist = json.artists.items[0];
+			console.log('artist', artist);
+			this.setState({artist: artist});
+		});
 	}
 
 	render() {
@@ -51,10 +57,7 @@ class App extends Component {
 
 
 
-				<div className="Profile">
-					<div>Artist Picture</div>
-					<div>Artist Name</div>
-				</div>
+				<Profile artist={this.state.artist} />
 
 				<div className="Gallery">
 					Gallery
